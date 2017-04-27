@@ -1,4 +1,4 @@
-
+package jcip;
 public class NoVisibility {
 	private static boolean ready;
 	private static int number;
