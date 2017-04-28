@@ -27,4 +27,8 @@ public class MutablePoint implements Point{
 	public void setY(int y) {
 		this.y = y;
 	}
+	
+	public int[] get() {
+		return new int[] {x, y};
+	}
 }

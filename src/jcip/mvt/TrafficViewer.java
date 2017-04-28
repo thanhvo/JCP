@@ -11,7 +11,8 @@ public class TrafficViewer extends Thread{
 		System.out.println("The current state of the traffic:");
 		for (String id : tracker.getVehicleNames()) {
 			Point loc = tracker.getLocation(id);
-			System.out.println(id + " " + loc.getX() + " " + loc.getY());
+			int[] values = loc.get();
+			System.out.println(id + " " + values[0] + " " + values[1]);
 		}
 	}
 }

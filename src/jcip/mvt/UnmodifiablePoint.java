@@ -17,4 +17,8 @@ public class UnmodifiablePoint implements Point{
 	public int getY() {
 		return y;
 	}
+	
+	public int[] get() {
+		return new int[] {x, y};
+	}
 }
