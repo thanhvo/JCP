@@ -1,17 +1,17 @@
 package jcip.mvt;
 
 public class TrafficViewer extends Thread{
-	MonitorVehicleTracker tracker;
+	VehicleTracker tracker;
 	
-	public TrafficViewer (MonitorVehicleTracker tracker) {
+	public TrafficViewer (VehicleTracker tracker) {
 		this.tracker = tracker;
 	}
 	
 	public void run() {
 		System.out.println("The current state of the traffic:");
 		for (String id : tracker.getVehicleNames()) {
-			MutablePoint loc = tracker.getLocation(id);
-			System.out.println(id + " " + loc.x + " " + loc.y);
+			Point loc = tracker.getLocation(id);
+			System.out.println(id + " " + loc.getX() + " " + loc.getY());
 		}
 	}
 }

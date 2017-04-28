@@ -3,9 +3,9 @@ package jcip.mvt;
 import java.util.*;
 
 public class TrafficUpdater extends Thread{
-	MonitorVehicleTracker tracker;
+	VehicleTracker tracker;
 	
-	public TrafficUpdater(MonitorVehicleTracker tracker) {
+	public TrafficUpdater(VehicleTracker tracker) {
 		this.tracker = tracker;
 	}
 	

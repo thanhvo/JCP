@@ -4,7 +4,7 @@ import jcip.annotations.*;
 import java.util.*;
 
 @ThreadSafe
-public class MonitorVehicleTracker {
+public class MonitorVehicleTracker implements VehicleTracker{
 	@GuardedBy("this")
 	private final Map<String, MutablePoint> locations;
 	
@@ -20,7 +20,7 @@ public class MonitorVehicleTracker {
 		this.locations = deepCopy(locations);
 	}
 	
-	public synchronized MutablePoint getLocation(String id) {
+	public synchronized Point getLocation(String id) {
 		MutablePoint loc = locations.get(id);
 		return loc == null ? null : new MutablePoint(loc);
 	}
@@ -30,8 +30,8 @@ public class MonitorVehicleTracker {
 		if (loc == null) {
 			throw new IllegalArgumentException("No such ID: " + id);
 		}
-		loc.x = x;
-		loc.y = y;
+		loc.setX(x);
+		loc.setY(y);
 	}
 	
 	public synchronized Set<String> getVehicleNames() {

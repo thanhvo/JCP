@@ -5,19 +5,19 @@ import java.util.concurrent.*;
 
 public class TrackingSystem {
 	public static void main(String[] args) {
-		Map<String, MutablePoint> locations = new HashMap<String, MutablePoint>();
-		locations.put("Camry", new MutablePoint());
-		locations.put("Accord", new MutablePoint());
-		locations.put("Jeep", new MutablePoint());
-		locations.put("Honda", new MutablePoint());
-		locations.put("Camry", new MutablePoint());
-		locations.put("Ford", new MutablePoint());
-		locations.put("BMW", new MutablePoint());
-		locations.put("Mercedes", new MutablePoint());
-		locations.put("Fiat", new MutablePoint());
-		locations.put("Harley", new MutablePoint());
-		locations.put("GM", new MutablePoint());
-		MonitorVehicleTracker tracker = new MonitorVehicleTracker(locations);
+		Map<String, UnmodifiablePoint> locations = new HashMap<String, UnmodifiablePoint>();
+		locations.put("Camry", new UnmodifiablePoint(0,0));
+		locations.put("Accord", new UnmodifiablePoint(0,0));
+		locations.put("Jeep", new UnmodifiablePoint(0,0));
+		locations.put("Honda", new UnmodifiablePoint(0,0));
+		locations.put("Camry", new UnmodifiablePoint(0,0));
+		locations.put("Ford", new UnmodifiablePoint(0,0));
+		locations.put("BMW", new UnmodifiablePoint(0,0));
+		locations.put("Mercedes", new UnmodifiablePoint(0,0));
+		locations.put("Fiat", new UnmodifiablePoint(0,0));
+		locations.put("Harley", new UnmodifiablePoint(0,0));
+		locations.put("GM", new UnmodifiablePoint(0,0));
+		DelegatingVehicleTracker tracker = new DelegatingVehicleTracker(locations);
 		TrafficViewer viewer = new TrafficViewer(tracker);
 		TrafficUpdater[] updaters = new TrafficUpdater[10];
 		for (int i = 0; i < 10; i++) {
