@@ -2,6 +2,7 @@ package jcip.mvt;
 
 import jcip.annotations.*;
 import java.util.*;
+import jcip.log.*;
 
 @ThreadSafe
 public class MonitorVehicleTracker implements VehicleTracker{
@@ -31,7 +32,7 @@ public class MonitorVehicleTracker implements VehicleTracker{
 			throw new IllegalArgumentException("No such ID: " + id);
 		}
 		loc.setX(x);
-		loc.setY(y);
+		loc.setY(y);		
 	}
 	
 	public synchronized Set<String> getVehicleNames() {

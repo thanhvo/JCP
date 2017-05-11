@@ -1,4 +1,4 @@
-package jcip;
+package jcip.log;
 
 import java.io.*;
 import java.math.*;
