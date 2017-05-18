@@ -31,4 +31,8 @@ public class MutablePoint implements Point{
 	public int[] get() {
 		return new int[] {x, y};
 	}
+	
+	public boolean equals(Point p) {
+		return p.getX() == x && p.getY() == y;
+	}
 }

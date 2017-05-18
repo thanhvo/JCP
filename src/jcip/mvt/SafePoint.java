@@ -28,4 +28,9 @@ public class SafePoint implements Point{
 	public synchronized int getY() {
 		return y;
 	}
+	
+	@Override
+	public boolean equals(Point p) {
+		return p.getX() == x && p.getY() == y;
+	}
 }

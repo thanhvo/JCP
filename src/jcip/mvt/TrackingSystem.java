@@ -46,13 +46,11 @@ public class TrackingSystem {
 				updaters[i] = new TrafficUpdater(tracker,logger);
 			}
 			
-			ScheduledExecutorService viewExecutor = Executors.newSingleThreadScheduledExecutor();
-			viewExecutor.scheduleAtFixedRate(viewer, 0, 10, TimeUnit.SECONDS);
+			ScheduledExecutorService exec = Executors.newScheduledThreadPool(N_THREADS + 1);
+			exec.scheduleAtFixedRate(viewer, 0, 10, TimeUnit.SECONDS);
 			
-			ScheduledExecutorService[] updateExecutors = new ScheduledExecutorService[10];
 			for (int i = 0; i < N_THREADS; i++) {
-				updateExecutors[i] = Executors.newSingleThreadScheduledExecutor();
-				updateExecutors[i].scheduleAtFixedRate(updaters[i], 0, 1, TimeUnit.MILLISECONDS);
+				exec.scheduleAtFixedRate(updaters[i], 0, 1, TimeUnit.MILLISECONDS);
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
