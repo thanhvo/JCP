@@ -1,8 +1,11 @@
 package jcip.bank;
 
+import java.util.concurrent.locks.*;
+
 public class Account {
 	private final int id;
 	private int balance;
+	public ReentrantLock lock;
 	
 	public void deposit(int amount) {
 		balance += amount;
@@ -19,6 +22,7 @@ public class Account {
 	public Account(int id, int balance) {
 		this.balance = balance;
 		this.id = id;
+		lock = new ReentrantLock();
 	}
 	
 	public final int getId() {

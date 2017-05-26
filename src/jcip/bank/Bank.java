@@ -1,5 +1,9 @@
 package jcip.bank;
 
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
+import java.util.*;
+
 import jcip.log.*;
 
 public class Bank {
@@ -83,5 +87,49 @@ public class Bank {
 				}
 			} catch (Exception ex) {}
 		}	
+	}
+	
+	private long getFixedDelayComponentNanos(long timeout, TimeUnit unit) {		
+		return unit.toNanos(timeout);
+	}
+	
+	private long getRandomDelayModulusNanos(long timeout, TimeUnit unit) {
+		return ThreadLocalRandom.current().nextLong(unit.toNanos(timeout));
+	}
+	
+	public boolean transferMoney(Account fromAcct, Account toAcct, final int amount, long timeout, TimeUnit unit)
+		throws InsufficientFundsException, InterruptedException {
+		long fixedDelay = getFixedDelayComponentNanos(timeout, unit);
+		long randMod = getRandomDelayModulusNanos(timeout, unit);
+		long stopTime = System.nanoTime() + unit.toNanos(timeout);
+		
+		while (true) {
+			if (debug) logger.log("Trying to acquire lock " + fromAcct.getId());
+			if (fromAcct.lock.tryLock()) {
+				try {
+					if (debug) logger.log("Trying to acquire lock " + toAcct.getId());
+					if (toAcct.lock.tryLock()) {
+						try {
+							if (fromAcct.getBalance() < amount) {
+								if (debug) logger.log("Not enough fund. Trying to transfer " + amount + " from account of balance " + fromAcct.getBalance());
+								throw new InsufficientFundsException("Not enough fund");
+							} else {
+								if (debug) logger.log("Transfering from account " + fromAcct.getId() + " to " + toAcct.getId());
+								fromAcct.take(amount);
+								toAcct.deposit(amount);
+								return true;
+							}
+						} finally {
+							toAcct.lock.unlock();
+						}
+					}
+				} finally {
+					fromAcct.lock.unlock();
+				}
+			}
+			if (System.nanoTime() > stopTime)
+				return false;
+			TimeUnit.NANOSECONDS.sleep(fixedDelay + ThreadLocalRandom.current().nextLong() % randMod);
+		}
 	}
 }

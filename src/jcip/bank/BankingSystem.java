@@ -40,7 +40,7 @@ public class BankingSystem {
 		} catch (Exception e) {}
 		
 		final Bank bank = new Bank(logger);
-		bank.disable_log();
+		//bank.disable_log();
 		class TransferThread extends Thread {
 			private CountDownLatch latch;
 			
@@ -55,6 +55,7 @@ public class BankingSystem {
 					int amount = rnd.nextInt(BOUND);					
 					try {
 						bank.transferMoney(accounts[fromAcct], accounts[toAcct], amount);
+						//bank.transferMoney(accounts[fromAcct], accounts[toAcct], amount, 1, TimeUnit.MILLISECONDS);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}					
