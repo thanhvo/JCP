@@ -38,4 +38,36 @@ public class BoundedBufferTest extends TestCase{
 			fail();
 		}
 	}
+	
+	public void testConditionedBoundedBuffer() {
+		final ConditionedBoundedBuffer buffer = new ConditionedBoundedBuffer<Integer>(10);
+		Thread putter = new Thread() {
+			public void run() {
+				for(int i = 0; i < 100; i++) {
+					try {
+						buffer.put(i);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		
+		Thread taker = new Thread() {
+			public void run() {
+				for (int i = 0; i < 100; i++) {
+					try {
+						System.out.println(buffer.take());
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		
+		putter.start();
+		taker.start();
+	}
 }
