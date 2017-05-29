@@ -40,7 +40,8 @@ public class BoundedBufferTest extends TestCase{
 	}
 	
 	public void testConditionedBoundedBuffer() {
-		final ConditionedBoundedBuffer buffer = new ConditionedBoundedBuffer<Integer>(10);
+		//final ConditionedBoundedBuffer buffer = new ConditionedBoundedBuffer<Integer>(10);
+		final BoundedBuffer buffer = new BoundedBuffer<Integer>(10);
 		Thread putter = new Thread() {
 			public void run() {
 				for(int i = 0; i < 100; i++) {
@@ -68,6 +69,14 @@ public class BoundedBufferTest extends TestCase{
 		};
 		
 		putter.start();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		taker.start();
 	}
+	
+	
 }

@@ -14,8 +14,10 @@ public class ConditionedBoundedBuffer<V> extends BaseBoundedBuffer<V> {
 		while (isFull()) {
 			wait();
 		}
+		boolean wasEmpty = isEmpty();
 		doPut(v);
-		notifyAll();
+		if (wasEmpty)
+			notifyAll();
 	}
 	
 	// BLOCKS-UNTIL: not-empty
@@ -23,8 +25,10 @@ public class ConditionedBoundedBuffer<V> extends BaseBoundedBuffer<V> {
 		while (isEmpty()) {
 			wait();
 		}
+		boolean wasFull = isFull();
 		V v = doTake();
-		notifyAll();
+		if (wasFull)
+			notifyAll();
 		return v;
 	}
 }
