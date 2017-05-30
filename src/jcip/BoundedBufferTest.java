@@ -40,8 +40,9 @@ public class BoundedBufferTest extends TestCase{
 	}
 	
 	public void testConditionedBoundedBuffer() {
+		final ConditionBoundedBuffer buffer = new ConditionBoundedBuffer<Integer>();
 		//final ConditionedBoundedBuffer buffer = new ConditionedBoundedBuffer<Integer>(10);
-		final BoundedBuffer buffer = new BoundedBuffer<Integer>(10);
+		//final BoundedBuffer buffer = new BoundedBuffer<Integer>(10);
 		Thread putter = new Thread() {
 			public void run() {
 				for(int i = 0; i < 100; i++) {
