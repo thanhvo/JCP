@@ -6,13 +6,14 @@ import jcip.annotations.*;
 
 @ThreadSafe
 public class BoundedBuffer<E> {
-	private final Semaphore availableItems, availableSpaces;
+	//private final Semaphore availableItems, availableSpaces;
+	private final SemaphoreOnLock availableItems, availableSpaces;
 	@GuardedBy("this") private final E[] items;
 	@GuardedBy("this") private int putPosition = 0, takePosition = 0;
 	
 	public BoundedBuffer(int capacity) {
-		availableItems = new Semaphore(0);
-		availableSpaces = new Semaphore(capacity);
+		availableItems = new SemaphoreOnLock(0);
+		availableSpaces = new SemaphoreOnLock(capacity);
 		items = (E[]) new Object[capacity];
 	}
 	
