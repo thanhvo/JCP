@@ -5,7 +5,8 @@ import java.util.concurrent.*;
 
 public class CellularAutomata {
 	private final Board mainBoard;
-	private final CountDownLatch startGate = new CountDownLatch(1);
+	//private final CountDownLatch startGate = new CountDownLatch(1);
+	private final BooleanLatch startGate = new BooleanLatch();
 	private final CountDownLatch endGate; 
 	private final Worker[] workers;
 	
@@ -47,7 +48,8 @@ public class CellularAutomata {
 		long start = 0, end = 0;
 		try {
 			start = System.nanoTime();
-			startGate.countDown();
+			//startGate.countDown();
+			startGate.signal();
 			endGate.await();
 			end = System.nanoTime(); 
 		} catch( InterruptedException ignored) {
